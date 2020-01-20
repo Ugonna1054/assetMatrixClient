@@ -1,0 +1,71 @@
+
+//Logo
+@mixin Logo($height) {
+    .logo  {
+        position: absolute;
+        top: $height;
+        height: auto;
+        cursor: pointer;
+        .logo-image{
+            height:35px;
+        }
+        .logo_image_wrapper {
+            &::after {
+                content: "Asset Matrix";
+                color: $background-color;
+                font-weight: 700;
+                font-size: large;
+            }
+        }
+    }
+}
+
+//Side nav
+@mixin sidenav-responsive($width, $max-width) {
+    .sidenav_client{
+        width: $width;
+        max-width: $max-width;
+        .main-nav {
+            position: relative;
+            //border: 2px solid black;
+            width: auto;
+            .nav-items {
+               // border: 2px solid blue;
+                width:auto;
+                //max-width: auto;
+            }
+        }
+    }
+}
+
+//Dashboard
+@mixin container  ($max-height, $overflow-y, $overflow-x) {
+    width: 80%;
+    margin:0px auto;
+    position: relative;
+    padding: 25px;
+    padding-right: 0px;
+   // border: 2px solid green;
+    max-height: $max-height;
+    overflow-y:$overflow-y;
+    overflow-x: $overflow-x;
+    z-index: 1;
+    top:50px;
+    margin-top:-100vh;
+    margin-right: 2vw;
+}
+
+@mixin title {
+    font-weight: 500;
+    color: $background-color;
+    background: white;
+    -webkit-box-shadow: 0px 0px 6px  grey;
+            box-shadow: 0px 0px 6px  grey;
+    border-radius: 2px;
+    width: 100%;
+}
+
+@mixin  line  {
+    border: 1.1px solid $background-color;
+    background: $background-color;
+}

@@ -1,32 +1,37 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <!-- <Loader :loading="loading" loading-text="please wait..." /> -->
+    <!-- <div>
+      <b-button v-b-modal.modal-1>Launch demo modal</b-button>
+
+      <b-modal id="modal-1" title="BootstrapVue">
+        <p class="my-4">Hello from modal!</p>
+      </b-modal>
+    </div> -->
+     <router-view />
+  
   </div>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style lang="scss">
+//@import url("./assets/css/matrix.css");
+@import url("./assets/fontawesome/css/all.css");
 </style>
+
+<script>
+//import Loader from "./utils/vue-loader/loader.vue";
+export default {
+  name: "App",
+  components: {
+    //Loader
+  },
+  data() {
+    return {
+      loading: false
+    };
+  },
+  mounted() {
+    //this.$toastr.e("error.status", "Validation Failed!");
+  }
+};
+</script>

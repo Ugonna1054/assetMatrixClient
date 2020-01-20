@@ -1,0 +1,289 @@
+@font-face {
+    font-family: Montserrat-Medium;
+    src: url('~@/assets/fonts/Montserrat/Montserrat-Medium.ttf');
+}
+@font-face {
+    font-family: Montserrat-Regular;
+    src: url('~@/assets/fonts/Montserrat/Montserrat-Regular.ttf');
+}
+
+//Login Page
+.login-page {
+    @include Logo(40px);
+
+    width: 100%;
+    height: 100vh;
+    background-image: url("~@/assets/images/background.jpg");
+    background-size: cover;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack:space-evenly;
+        -ms-flex-pack:space-evenly;
+            justify-content:space-evenly;
+    padding: 5rem 1rem;
+    .card-width {
+        width: 20rem;
+        max-width:20rem
+    }
+    .login-label {
+        color:rgb(124, 22, 4);
+        float: left;
+    } 
+    .login-btn {
+        float: right;
+        background: $background-color;
+        border-color: $background-color;
+    }  
+    .outer-form {
+        position: relative;
+        margin-top: 8ch;
+    }
+    .forgot-password, .account {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+    }
+    .line {
+       @include line
+    } 
+    .here {
+        color: $background-color;
+        cursor: pointer;
+        font-style: italic;
+        &:hover {
+            text-decoration: underline;
+        }
+        &:nth-child(2) {
+            font-weight: 600;
+        }
+    }
+}
+
+//Signup page
+
+
+//Sidenav
+.sidenav_client {
+    background: $background-color;
+    width: auto;
+    max-width: 53vw;
+    margin-top: -60px;
+    height: calc(100vh + 4px);
+    position: relative;
+    z-index: 2;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    padding: 0;
+    .logo-wrapper {
+        border: 1px solid white;
+        height: 59.45px;
+        max-height: 100px;
+        background: white;
+        padding-right: 3px;
+        position: relative;
+        @include Logo (20px);
+        .hamburger {
+            margin-top: 28px;
+            cursor: pointer;
+            float: right;
+            width: 27px;
+            .hamburger-line {
+                border: 1.7px solid grey;
+                background: grey;
+                margin-bottom: 3px;
+                width: auto;
+            }
+        }
+    }
+    .main-navs {
+        position: relative;
+        padding: 10px;
+        width: auto;
+        .nav-texts {
+            width:auto;
+            color: white;
+            margin-bottom: 5px;
+            cursor: pointer;
+            &:hover {
+                color: grey;
+            }
+            .nav-items{
+                margin-left: 6px;
+            }
+        }
+    }
+}
+
+//Headernav
+.header-nav {
+    .navbar {
+        background: $background-color;
+        .avatar-wrapper {
+            height: auto;
+            border-radius: 10px;
+            //border: 2px solid black;
+            .avatar {
+                height: 40px;
+                border: 2px solid green;
+                border-radius: 30px;
+            }
+        }
+    }
+   
+}
+
+//Global styles
+
+//main container
+.main-container {
+    position: relative;
+    font-family: Montserrat-Medium;
+}
+
+//Table
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Montserrat-Medium;
+    font-size: 13px;
+    color: #4A4A4A;
+    letter-spacing: 0;
+    td, th {
+         border: none;
+         text-align: left;
+         padding: 8px 0.5rem;
+     } 
+     tr:nth-child(even) {
+         background-color: #E5E5E5;
+     }
+}
+
+//Dashboard 
+    .dashboard-container {
+       @include container(600px, auto, hidden);
+       .main-content {
+            .dashboard-title {
+               @include title
+            }
+            .dashboard-cards {
+                // border: 2px solid blue;
+                padding: 0rem;
+                width: 100%;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: justify;
+                    -ms-flex-pack: justify;
+                        justify-content: space-between;
+                -ms-flex-wrap: wrap;
+                    flex-wrap: wrap;
+                .card-item {
+                    height: 100px;
+                    background: white;
+                    -webkit-box-shadow: 0px 0px 6px  grey;
+                            box-shadow: 0px 0px 6px  grey;
+                    border-radius: 2px;
+                    width: 200px;
+                    .item2, .item1 {
+                        font-weight: 500;
+                    }
+                    .item2 {
+                        color:grey;
+                    }
+                    .line1 {
+                        border: 2px solid salmon;
+                    }
+                    .line2 {
+                        border: 2px solid limegreen;
+                    }
+                    .line3 {
+                        border: 2px solid violet;
+                    }
+      
+                }
+            }
+            .performance-wrapper {
+                font-family: Montserrat-Regular;
+                .performance {
+                    padding: 14px;
+                    color: grey
+                }
+            }
+        }     
+    }
+
+
+//User
+.create-user {
+    @include container (600px, auto, auto);
+    .user-title{
+        @include title;
+        padding:5px
+    }
+    .create, .manage {
+        padding: 0px 3px;
+        cursor: pointer;
+        &.active {
+            border-bottom: 4px solid $background-color;
+        }
+    }
+    .current {
+        background: $background-color !important;
+        color: white !important;
+         -webkit-transition: all .3s ease-in-out;
+         transition: all .3s ease-in-out;
+      }
+    .tab {
+         margin-top: -20px;
+         margin-bottom: 0px;
+         margin-left: 15px;
+         padding: 5px 18px;
+         border: 2px solid $background-color;
+        }
+    .tab-contents {
+        font-family: Montserrat-Regular;
+        margin-top: 15px;
+        max-height: 300px;
+        padding: 20px;
+        overflow-y: scroll;
+        overflow-x: auto;
+        .uploads {
+            height:105px; 
+            width:170px; 
+            border:1px solid blue
+        }
+    }
+    .tab-contents1 { 
+        padding: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+}
+
+/* Global css  for scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px grey; 
+    border-radius: 10px;
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background:$scrollbar;
+    -webkit-box-shadow: inset 0 0 6px $scrollbar; 
+}
+
+
+
+
+
+
+
