@@ -88,6 +88,8 @@
         @include Logo (20px);
         .hamburger {
             margin-top: 28px;
+            position: relative;
+            // left: 180px;
             cursor: pointer;
             float: right;
             width: 27px;
@@ -244,8 +246,7 @@ table {
          transition: all .3s ease-in-out;
       }
     .tab {
-         margin-top: -20px;
-         margin-bottom: 0px;
+         margin-bottom: 10px;
          margin-left: 15px;
          padding: 5px 18px;
          border: 2px solid $background-color;

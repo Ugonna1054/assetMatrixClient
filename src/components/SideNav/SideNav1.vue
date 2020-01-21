@@ -2,7 +2,7 @@
   <div class="sidenav-wrapper">
     <div ref="mySideNav" class="sidenav_client">
       <div class="logo-wrapper border">
-        <div class="logo ml-2" @click="$router.push('/Login')">
+        <div class="logo ml-2 d-flex just-fy-content-betwee" @click="$router.push('/Login')">
           <div
             :class="{
               logo_image_wrapper: content,

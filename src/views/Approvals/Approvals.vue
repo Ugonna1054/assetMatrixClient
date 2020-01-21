@@ -3,7 +3,7 @@
     <Headernav />
     <Sidenav />
     <div class="create-user">
-      <div>
+      <div class="mt-n3">
         <b-tabs class="ml-n3" pills no-body :active-nav-item-class="current">
           <b-tab
             class="ml-3 mb-5"
