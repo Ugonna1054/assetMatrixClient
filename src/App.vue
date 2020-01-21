@@ -8,8 +8,7 @@
         <p class="my-4">Hello from modal!</p>
       </b-modal>
     </div> -->
-     <router-view />
-  
+    <router-view />
   </div>
 </template>
 

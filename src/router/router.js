@@ -30,6 +30,21 @@ const routes = [
     name: "Admin/User/Manage",
     component: () => import("../views/User/ManageUser.vue")
   },
+  {
+    path: "/Admin/Approvals",
+    name: "Admin/Approvals",
+    component: () => import("../views/Approvals/Approvals.vue")
+  },
+  {
+    path: "/Admin/Approvals/Details",
+    name: "Admin/Approvals/Details",
+    component: () => import("../views/Approvals/Details.vue")
+  },
+  {
+    path: "/Admin/Report",
+    name: "Admin/Report",
+    component: () => import("../views/Report/Report.vue")
+  },
 
 ];
 

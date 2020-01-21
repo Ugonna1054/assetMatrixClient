@@ -146,6 +146,7 @@
 
 //Table
 table {
+    font-family: Montserrat-Regular;
     border-collapse: collapse;
     width: 100%;
     font-family: Montserrat-Medium;
@@ -160,6 +161,12 @@ table {
      tr:nth-child(even) {
          background-color: #E5E5E5;
      }
+}
+
+.table1 {
+    width: 90%;
+    padding: 1rem;
+    margin: 0px 10px;
 }
 
 //Dashboard 
@@ -216,7 +223,6 @@ table {
         }     
     }
 
-
 //User
 .create-user {
     @include container (600px, auto, auto);
@@ -244,6 +250,18 @@ table {
          padding: 5px 18px;
          border: 2px solid $background-color;
         }
+    .top {
+        display: flex;
+        justify-content: space-between;
+        .input-group-text{
+            cursor: pointer;
+            color: whitesmoke;
+            background: $background-color;
+        }
+        input::placeholder{
+            font-size:15px
+        }
+    }
     .tab-contents {
         font-family: Montserrat-Regular;
         margin-top: 15px;
@@ -277,8 +295,8 @@ table {
  
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background:$scrollbar;
-    -webkit-box-shadow: inset 0 0 6px $scrollbar; 
+    background:$background-color;
+    -webkit-box-shadow: inset 0 0 6px $background-color; 
 }
 
 

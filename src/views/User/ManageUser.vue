@@ -17,10 +17,26 @@
             <!-- Agent Tab -->
             <b-tab :title-link-class="active1" title="Agent">
               <div class="line mb-3 mt-3"></div>
-              <div class="tab-c">
-                <div class="user-title  card mb-0">
+              <div class="">
+                <div class="user-title card mb-0">
                   <div class="col-12 tab-contents1">
-                    <p class="mb-3">Agent Individual Performance</p>
+                    <div class="top mb-2">
+                      <div class="mb-3">Agent</div>
+                      <div>
+                        <div class="input-group float-right">
+                          <input
+                            type="search"
+                            placeholder="Search Agent"
+                            class="form-control"
+                          />
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <i class="fa fa-search"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <div class="recent-transactions table-responsive">
                       <table>
                         <tr style="background:#14899b; color:whitesmoke">
@@ -33,6 +49,7 @@
                           <th>Account Created</th>
                           <th>Account Created Target</th>
                           <th>MTD Account Created</th>
+                            <th>Delete</th> 
                         </tr>
 
                         <tr v-for="(one, index) in 9" :key="index">
@@ -42,9 +59,10 @@
                           <td>Again</td>
                           <td>Something</td>
                           <td>Account</td>
-                          <td>30 </td>
-                          <td>300 </td>
-                          <td>300 </td>
+                          <td>30</td>
+                          <td>300</td>
+                          <td>300</td>
+                            <td class="text-danger  action">Delete</td>
                         </tr>
                       </table>
                     </div>
@@ -55,13 +73,58 @@
 
             <!-- Customer Tab -->
             <b-tab :title-link-class="active1" title="Customer">
-              <!-- <div class="line mb-3"></div> -->
-              <div class="tab-content">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Aliquid, voluptatibus! Optio culpa totam id dignissimos
-                voluptas. Earum, tempore reiciendis. Nesciunt doloremque iste
-                nostrum possimus, atque magni voluptatum accusamus voluptates
-                in?
+              <div class="line mb-3 mt-3"></div>
+              <div class="tab-c">
+                <div class="user-title  card mb-0">
+                  <div class="col-12 tab-contents1">
+                    <div class="top mb-2">
+                      <div class="mb-3">Customer</div>
+                      <div>
+                        <div class="input-group float-right">
+                          <input
+                            type="search"
+                            placeholder="Search Customer"
+                            class="form-control"
+                          />
+                          <div class="input-group-append">
+                            <div class="input-group-text">
+                              <i class="fa fa-search"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="recent-transactions table-responsive">
+                      <table>
+                        <tr style="background:#14899b; color:whitesmoke">
+                          <th>Name</th>
+                          <th>Email Address</th>
+                          <th>Phone Number</th>
+                          <th>Acount Number</th>
+                          <th>Gender</th>
+                          <th>Home Address</th>
+                          <th>DOB</th>
+                          <th>Account Balance</th>
+                          <th>MTD Total Deposit</th>
+                          <th>Delete</th> 
+                        </tr>
+
+                        <tr v-for="(one, index) in 9" :key="index">
+                          <td>10393939</td>
+                          <td>Ugonna</td>
+                          <td>Ubaka</td>
+                          <td>Again</td>
+                          <td>Something</td>
+                          <td>Account</td>
+                          <td>30</td>
+                          <td>300</td>
+                          <td>300</td>
+                          <td class="text-danger  action">Delete</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
               </div>
             </b-tab>
           </b-tabs>
@@ -104,4 +167,9 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.action:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>

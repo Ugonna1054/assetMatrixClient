@@ -44,13 +44,17 @@
             </span>
             <span class="nav-items" ref="nav_items"> User Management</span>
           </b-nav-text>
-          <b-nav-text class="nav-texts">
+          <b-nav-text
+            class="nav-texts"
+            @click="$router.push('/Admin/Approvals')"
+          >
             <span class="nav-icons">
               <i class="fa fa-check"></i>
             </span>
             <span class="nav-items" ref="nav_items"> Approvals</span>
           </b-nav-text>
-          <b-nav-text class="nav-texts">
+          <b-nav-text class="nav-texts"
+           @click="$router.push('/Admin/Report')">
             <span class="nav-icons">
               <i class="fa fa-clock"></i>
             </span>
