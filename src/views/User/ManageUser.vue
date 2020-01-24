@@ -11,12 +11,12 @@
           >
         </div>
       </div>
-      <div class="row  mb-5">
-        <div class="col-12">
+      <div class="row  mb-5 mt-n4">
+        <div class="col-12 ">
           <b-tabs pills no-body :active-nav-item-class="current">
             <!-- Agent Tab -->
             <b-tab :title-link-class="active1" title="Agent">
-              <div class="line mb-3 mt-3"></div>
+              <div class="line mb-3 mt-2"></div>
               <div class="">
                 <div class="user-title card mb-0">
                   <div class="col-12 tab-contents1">
@@ -73,7 +73,7 @@
 
             <!-- Customer Tab -->
             <b-tab :title-link-class="active1" title="Customer">
-              <div class="line mb-3 mt-3"></div>
+              <div class="line mb-3 mt-2"></div>
               <div class="tab-c">
                 <div class="user-title  card mb-0">
                   <div class="col-12 tab-contents1">

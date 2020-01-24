@@ -5,11 +5,11 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "home",
-  //   component: Home
-  // },
+  {
+    path: "/",
+    name: "home",
+    redirect : "/Login"
+  },
   {
     path: "/Login",
     name: "Login",

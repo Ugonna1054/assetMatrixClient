@@ -15,12 +15,12 @@
           <span class="manage" @click="manage"> Manage User</span>
         </div>
       </div>
-      <div class=" row  mb-5">
+      <div class=" row mb-5 mt-n4">
         <div class="col-12">
           <b-tabs pills no-body :active-nav-item-class="current">
             <!-- Agent Tab -->
             <b-tab :title-link-class="active1" title="Agent">
-              <!-- <div class="line mb-3 mt-3"></div> -->
+              <div class="line mb-3 mt-2"></div>
               <div class="tab-content">
                 <ValidationObserver v-slot="{ passes }">
                   <form @submit.prevent="passes(createAccount)">
@@ -354,6 +354,7 @@
 
             <!-- Teller tab -->
             <b-tab :title-link-class="active1" title="Teller">
+               <div class="line mb-3 mt-2"></div>
               <div class="tab-content">
                 <ValidationObserver v-slot="{ passes }">
                   <form @submit.prevent="passes(next_page)">

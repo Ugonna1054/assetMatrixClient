@@ -11,7 +11,7 @@
             Dashboard
           </div>
         </div>
-        <div class="dashboard-cards row mb-4 ">
+        <div class="dashboard-cards row mb-2 mt-n4 ">
           <div class=" card-item col-md-3 col-12 mb-3">
             <p class="item1" style="color:salmon">350</p>
             <p class="item2">Total Agents</p>
@@ -37,13 +37,13 @@
         </div>
 
         <!-- Performance -->
-        <div class="dashboard-title row card mb-4">
+        <div class="dashboard-title row card mb-4 m">
           <div class="col-12">
             Performance
           </div>
         </div>
 
-        <div class="dashboard-title performance-wrapper row card mb-5">
+        <div class="dashboard-title performance-wrapper row card mb-4">
           <div class="col-12 mb-3">
             Monthly Performance
           </div>
