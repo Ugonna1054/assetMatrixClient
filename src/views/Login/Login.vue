@@ -17,11 +17,7 @@
             <ValidationObserver v-slot="{ passes }">
               <form action="" @submit.prevent="passes(login)">
                 <div class="form-group mt-3">
-                  <ValidationProvider
-                    name="kk"
-                    rules="required"
-                    v-slot="{ errors }"
-                  >
+                  <ValidationProvider name="kk" rules="" v-slot="{ errors }">
                     <label for="email" class="login-label">Email</label>
                     <div class="input-group">
                       <div class="input-group-append">
@@ -47,7 +43,7 @@
                 <div class="form-group mt-3">
                   <ValidationProvider
                     name="password"
-                    rules="required"
+                    rules=""
                     v-slot="{ errors }"
                   >
                     <label for="password" class="login-label">Password</label>
