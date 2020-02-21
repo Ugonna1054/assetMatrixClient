@@ -13,11 +13,7 @@
             }"
             ref="image_display"
           >
-            <img
-              class="logo-image"
-              src="../../assets/images/logo1.png"
-              alt=""
-            />
+            <img class="logo-image" src="../../assets/images/logo1.png" alt="" />
           </div>
         </div>
         <div
@@ -33,39 +29,31 @@
       </div>
       <div class="main-navs">
         <b-nav :small="small" vertical class="" v-for="i in 1" :key="i">
-          <b-nav-text
-            class="nav-texts"
-            @click="$router.push('/Admin/Dashboard')"
-          >
+          <b-nav-text class="nav-texts" @click="$router.push('/Dashboard')">
             <span class="nav-icons">
               <i class="fa fa-home"></i>
             </span>
-            <span class="nav-items" ref="nav_items"> Dashboard</span>
+            <span class="nav-items" ref="nav_items"> Account </span>
           </b-nav-text>
-          <b-nav-text
-            class="nav-texts"
-            @click="$router.push('/Admin/User/Create')"
-          >
+          <b-nav-text class="nav-texts" @click="$router.push('/Loan')">
             <span class="mrr-2 nav-icons">
               <i class="fa fa-user"></i>
             </span>
-            <span class="nav-items" ref="nav_items"> User Management</span>
+            <span class="nav-items" ref="nav_items"> Loan</span>
           </b-nav-text>
-          <b-nav-text
-            class="nav-texts"
-            @click="$router.push('/Admin/Approvals')"
-          >
+          <b-nav-text class="nav-texts" @click="$router.push('/Investment')">
             <span class="nav-icons">
               <i class="fa fa-check"></i>
             </span>
-            <span class="nav-items" ref="nav_items"> Approvals</span>
+            <span class="nav-items" ref="nav_items"> Investment</span>
           </b-nav-text>
-          <b-nav-text class="nav-texts" @click="$router.push('/Admin/Report')">
+          <!-- <b-nav-text class="nav-texts"
+           @click="$router.push('/Admin/Report')">
             <span class="nav-icons">
               <i class="fa fa-clock"></i>
             </span>
             <span class="nav-items" ref="nav_items"> Reports</span>
-          </b-nav-text>
+          </b-nav-text> -->
         </b-nav>
       </div>
     </div>

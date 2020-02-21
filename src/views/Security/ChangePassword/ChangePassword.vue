@@ -1,58 +1,25 @@
 <template>
-  <div>
+  <div class="login-pag">
     <Loader :loading="loading" loading-text="please wait..." />
     <div class="login-page">
-      <div class="logo">
-        <div class="logo_image_wrapper">
-          <img class="logo-image" src="../../assets/images/logo1.png" alt="" />
-        </div>
-      </div>
       <div>
         <b-card
-          title="Welcome Back!"
-          sub-title="Login to your profile"
+          title="Change Password!"
+          sub-title="Kindly change your password to continue"
           class="mb-2  card-width"
         >
           <b-card-text>
             <ValidationObserver v-slot="{ passes }">
-              <form action="" @submit.prevent="passes(login)">
+              <form action="" @submit.prevent="passes(changePassword)">
                 <div class="form-group mt-3">
                   <ValidationProvider
-                    name="email"
+                    name="password_"
                     rules="required"
                     v-slot="{ errors }"
                   >
-                    <label for="email" class="login-label"
-                      >Email or Account</label
+                    <label for="password" class="login-label"
+                      >Current Password</label
                     >
-                    <div class="input-group">
-                      <div class="input-group-append">
-                        <div class="input-group-text">
-                          <i class="fas fa-user"></i>
-                        </div>
-                      </div>
-                      <input
-                        name="email"
-                        id="email"
-                        v-model="email"
-                        placeholder="Email or Account Number"
-                        type="text"
-                        class="form-control"
-                      />
-                    </div>
-                    <span style="font-size:13px; color:red">
-                      <span v-if="errors[0]"><i class="fas fa-ban"></i></span>
-                      {{ errors[0] }}</span
-                    >
-                  </ValidationProvider>
-                </div>
-                <div class="form-group mt-3">
-                  <ValidationProvider
-                    name="password"
-                    rules="required"
-                    v-slot="{ errors }"
-                  >
-                    <label for="password" class="login-label">Password</label>
                     <div class="input-group">
                       <div class="input-group-append">
                         <div class="input-group-text">
@@ -74,7 +41,63 @@
                     >
                   </ValidationProvider>
                 </div>
-                <b-button type="submit" class="login-btn">Login</b-button>
+                <!-- password -->
+                <div class="form-group ">
+                  <ValidationProvider
+                    name="password"
+                    rules="required|min:6"
+                    ref="password"
+                    v-slot="{ errors }"
+                  >
+                    <label for="password">New Password</label>
+                    <div class="input-group">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="fa fa-lock"></i>
+                        </div>
+                      </div>
+                      <input
+                        v-model="newPassword"
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        id="password"
+                      />
+                    </div>
+                    <span style="font-size:13px; color:red">
+                      <span v-if="errors[0]"><i class="fas fa-ban"></i></span>
+                      {{ errors[0] }}</span
+                    >
+                  </ValidationProvider>
+                </div>
+                <div class="form-group">
+                  <ValidationProvider
+                    name="password confirmation"
+                    rules="required|confirmed:password"
+                    v-slot="{ errors }"
+                  >
+                    <label for="password">Confirm New Password</label>
+                    <div class="input-group">
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <i class="fa fa-lock"></i>
+                        </div>
+                      </div>
+                      <input
+                        v-model="password1"
+                        name="password confirmation"
+                        type="password"
+                        class="form-control"
+                        id="password1"
+                      />
+                    </div>
+                    <span style="font-size:13px; color:red">
+                      <span v-if="errors[0]"><i class="fas fa-ban"></i></span>
+                      {{ errors[0] }}</span
+                    >
+                  </ValidationProvider>
+                </div>
+                <b-button type="submit" class="login-btn">Change</b-button>
               </form>
             </ValidationObserver>
           </b-card-text>
@@ -88,11 +111,6 @@
                 reset
               </p>
             </div>
-            <div class="line mb-3"></div>
-            <div class="account">
-              <p class="h6">Don't have an account yet?</p>
-              <p class="here">SIGNUP</p>
-            </div>
           </div>
         </b-card>
       </div>
@@ -101,11 +119,12 @@
 </template>
 
 <script>
+import Loader from "../../../utils/vue-loader/loader.vue";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
-import Loader from "../../utils/vue-loader/loader.vue";
+import { securityService } from "../../../services/security.services";
 
 export default {
-  name: "Login",
+  name: "ChangePassword",
   components: {
     ValidationObserver,
     ValidationProvider,
@@ -113,29 +132,25 @@ export default {
   },
   data() {
     return {
-      email: "",
+      loading: false,
       password: "",
-      loading: false
+      newPassword: ""
     };
   },
   methods: {
-    async login() {
+    async changePassword() {
       this.loading = true;
-      await this.$store
-        .dispatch("LOGIN", {
-          email: this.email,
-          password: this.password
+      await securityService
+        .ChangePassword({
+          password: this.password,
+          newPassword: this.newPassword
         })
-        .then(res => {
-          window.console.log(res)
-          this.$toastr.s("Logged in Succesfully");
-          if (res.isAdmin) return this.$router.push("/Admin/Dashboard");
-          if (res.requiresChange === "false")
-            return this.$router.push("/ChangePassword");
-          this.$router.push("/Dashboard");
+        .then(() => {
+          this.$toastr.s("Kindly Login", "Password Change Successful");
+          this.$router.push("/Login")
         })
         .catch(err => {
-          this.$toastr.e(err.message, "Login Failed!");
+          this.$toastr.e(err.message || err, "Failed");
         })
         .finally(() => {
           this.loading = false;
@@ -145,4 +160,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.card-width {
+  width: 25rem !important;
+  max-width: 25rem !important;
+}
+</style>

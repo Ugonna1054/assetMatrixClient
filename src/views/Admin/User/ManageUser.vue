@@ -1,5 +1,6 @@
 <template>
   <div class="main-container">
+    <Loader :loading="loading" loading-text="please wait..." />
     <Headernav />
     <Sidenav />
     <div class="create-user">
@@ -42,27 +43,38 @@
                         <tr style="background:#14899b; color:whitesmoke">
                           <th>Agent ID</th>
                           <th>Agent Name</th>
+                          <th>Email</th>
+                          <th>Phone Number</th>
                           <th>Wallet Balance</th>
                           <th>Today Deposit</th>
-                          <th>MTD Deposit</th>
-                          <th>Deposit Target</th>
+                          <th>Total Deposit</th>
                           <th>Account Created</th>
-                          <th>Account Created Target</th>
-                          <th>MTD Account Created</th>
-                            <th>Delete</th> 
+                          <!-- <th>Account Created Target</th> -->
+                          <th>Delete</th>
                         </tr>
 
-                        <tr v-for="(one, index) in 9" :key="index">
-                          <td>10393939</td>
-                          <td>Ugonna</td>
-                          <td>Ubaka</td>
-                          <td>Again</td>
-                          <td>Something</td>
-                          <td>Account</td>
-                          <td>30</td>
-                          <td>300</td>
-                          <td>300</td>
-                            <td class="text-danger  action">Delete</td>
+                        <tr v-for="(agent, index) in AGENT_DATA" :key="index">
+                          <td>{{ agent_id(index) }}</td>
+                          <td>{{ agent.firstname }} {{ agent.lastname }}</td>
+                          <td>{{ agent.email }}</td>
+                          <td>{{ agent.phone }}</td>
+                          <td v-if="agent.wallet">
+                            {{ agent.wallet.balance }}
+                          </td>
+                          <td v-else>0</td>
+                          <td v-if="agent.wallet">
+                            {{ agent.wallet.todayDeposit }}
+                          </td>
+                          <td v-else>0</td>
+                          <td v-if="agent.wallet">
+                            {{ agent.wallet.totalDeposit }}
+                          </td>
+                          <td v-else>0</td>
+                          <!-- <td>{{ agent.accountCreated }}</td> -->
+                          <!-- <td>{{ agent.target }}</td> -->
+                          <td>{{ getAgentCustomers(agent._id) }}</td>
+                          <!-- <td>300</td> -->
+                          <td class="text-danger  action">Delete</td>
                         </tr>
                       </table>
                     </div>
@@ -101,24 +113,27 @@
                           <th>Email Address</th>
                           <th>Phone Number</th>
                           <th>Acount Number</th>
-                          <th>Gender</th>
                           <th>Home Address</th>
                           <th>DOB</th>
                           <th>Account Balance</th>
-                          <th>MTD Total Deposit</th>
-                          <th>Delete</th> 
+                          <th>Delete</th>
                         </tr>
 
-                        <tr v-for="(one, index) in 9" :key="index">
-                          <td>10393939</td>
-                          <td>Ugonna</td>
-                          <td>Ubaka</td>
-                          <td>Again</td>
-                          <td>Something</td>
-                          <td>Account</td>
-                          <td>30</td>
-                          <td>300</td>
-                          <td>300</td>
+                        <tr v-for="(customer, index) in Customers" :key="index">
+                          <td>
+                            {{ customer.firstname }} {{ customer.lastname }}
+                          </td>
+                          <td>{{ customer.email }}</td>
+                          <td>{{ customer.phone }}</td>
+                          <td>{{ customer.account.accounts[0].number }}</td>
+                          <td>{{ customer.address }}</td>
+                          <td>{{ customer.dob }}</td>
+                          <td>
+                            &#8358;
+                            {{
+                              formatAmount(customer.account.accounts[0].balance)
+                            }}
+                          </td>
                           <td class="text-danger  action">Delete</td>
                         </tr>
                       </table>
@@ -135,17 +150,24 @@
 </template>
 
 <script>
-import Sidenav from "../../components/SideNav/SideNav1.vue";
-import Headernav from "../../components/HeaderNav/HeaderNav1.vue";
+import Sidenav from "../../../components/SideNav/SideNav1.vue";
+import Headernav from "../../../components/HeaderNav/HeaderNav1.vue";
+import Loader from "../../../utils/vue-loader/loader.vue";
+//import { adminService } from "../../../services/AdminServices/admin.services";
+import { clientService } from "../../../services/ClientServices/client.services";
+import { mapState } from "vuex";
+
 export default {
   name: "Dashboard",
   components: {
     Sidenav,
-    Headernav
+    Headernav,
+    Loader
   },
   data() {
     return {
-      // isActive: false
+      loading: false,
+      Customers: []
     };
   },
   computed: {
@@ -154,7 +176,13 @@ export default {
     },
     active1() {
       return ["tab"];
-    }
+    },
+    Customers_() {
+      return this.Customers.slice(1);
+    },
+    ...mapState({
+      AGENT_DATA: state => state.Agent.AGENT_DATA
+    })
   },
   methods: {
     create() {
@@ -162,7 +190,46 @@ export default {
     },
     manage() {
       this.$router.push("/Admin/User/Manage");
+    },
+    agent_id(n) {
+      let agent = this.AGENT_DATA[n];
+      let id = agent._id.substring(1, 10);
+      return id;
+    },
+    formatAmount(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //this function automatically adds commas to the value where necessary
+    },
+    //get all customers tied to an agent
+    getAgentCustomers(id) {
+      let customers = this.Customers;
+      let filtered = customers.filter(item => {
+        return item.agent["_id"] == id;
+        //window.console.log(items);
+        //return items.length;
+      });
+      window.console.log("filtered is", filtered.length);
+      return filtered.length;
+    },
+    //get all customers
+    async getCustomers() {
+      this.loading = true;
+      await clientService
+        .getCustomers()
+        .then(res => {
+          this.$toastr.s("Fetched Succesfully");
+          this.Customers = res;
+          window.console.log(this.Customers);
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
+  },
+  mounted() {
+    this.getCustomers();
   }
 };
 </script>

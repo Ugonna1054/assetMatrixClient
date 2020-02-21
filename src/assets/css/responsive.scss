@@ -9,7 +9,12 @@
    .create-user {
     @include container (540, hidden, hidden);
     padding:15px 10px;
-    top:10px
+    top:10px;
+    .active2{
+      margin-left: 0px !important;
+  }
+    
+    
   }
 }
 

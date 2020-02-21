@@ -1,5 +1,6 @@
 <template>
   <div class="main-container">
+     <Loader :loading="loading" loading-text="please wait..." />
     <Headernav />
     <Sidenav />
     <div class="create-user">
@@ -41,12 +42,12 @@
                       <th>Details</th>
                     </tr>
 
-                    <tr v-for="(one, index) in 9" :key="index">
-                      <td>Ubaka Ugonna</td>
-                      <td>07011122233</td>
-                      <td>Ugonna@yahoo.com</td>
-                      <td>Pending</td>
-                      <td class="text-primary action" @click="Account">
+                    <tr v-for="(customer, index) in Customers" :key="index">
+                      <td>{{ customer.firstname }} {{ customer.lastname }}</td>
+                      <td>{{ customer.phone }}</td>
+                      <td>{{ customer.email }}</td>
+                      <td>{{ customer.status }}</td>
+                      <td class="text-primary action" @click="Account(index)">
                         View
                       </td>
                     </tr>
@@ -163,17 +164,21 @@
 </template>
 
 <script>
-import Sidenav from "../../components/SideNav/SideNav1.vue";
-import Headernav from "../../components/HeaderNav/HeaderNav1.vue";
+import Sidenav from "../../../components/SideNav/SideNav1.vue";
+import Headernav from "../../../components/HeaderNav/HeaderNav1.vue";
+import { clientService } from "../../../services/ClientServices/client.services";
+import Loader from "../../../utils/vue-loader/loader.vue";
 export default {
   name: "Approvals",
   components: {
     Sidenav,
-    Headernav
+    Headernav,
+    Loader
   },
   data() {
     return {
-      modal1: false
+      loading: false,
+      Customers: []
     };
   },
   computed: {
@@ -185,7 +190,9 @@ export default {
     }
   },
   methods: {
-    Account() {
+    Account(index) {
+      let customer = this.Customers[index];
+      this.$store.commit("SET_USER_DETAILS", customer)
       this.$router.push("/Admin/Approvals/Details");
     },
     Loan() {
@@ -193,7 +200,27 @@ export default {
     },
     Investment() {
       this.$router.push("/Admin/Approvals/Details?p=3");
+    },
+     //get all customers
+    async getCustomers() {
+      this.loading = true;
+      await clientService
+        .getCustomers()
+        .then(res => {
+          this.$toastr.s("Fetched Succesfully");
+          this.Customers = res;
+          window.console.log(this.Customers);
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
+  },
+   mounted() {
+    this.getCustomers();
   }
 };
 </script>

@@ -70,7 +70,7 @@
 .sidenav_client {
     background: $background-color;
     width: auto;
-    max-width: 53vw;
+    max-width: 400px;
     margin-top: -60px;
     height: calc(100vh + 4px);
     position: relative;
@@ -125,17 +125,17 @@
     .navbar {
         background: $background-color;
         .avatar-wrapper {
-            height: auto;
+            height: 43px;
+            width:43px;
             border-radius: 10px;
             //border: 2px solid black;
             .avatar {
-                height: 40px;
+                height: 43px;
                 border: 2px solid green;
                 border-radius: 30px;
             }
         }
     }
-   
 }
 
 //Global styles
@@ -245,6 +245,29 @@ table {
          -webkit-transition: all .3s ease-in-out;
          transition: all .3s ease-in-out;
       }
+
+      .current2 {
+        background: none !important;
+        border-bottom: 3px solid $background-color !important;
+        border-radius:0px !important;
+        padding-bottom: 2px !important;
+        color: $background-color !important;
+        -webkit-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+    }
+
+    .active2 {
+        
+        background: none !important;
+        // padding: 5px !important;
+        border-radius:0px !important;
+        margin-left: 10px !important;
+        color: $background-color !important;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
+    }
+      
+   
     .tab {
          margin-bottom: 10px;
          margin-left: 15px;

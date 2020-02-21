@@ -9,10 +9,18 @@
         <div class="d-flex justify-content-between mb-3" style="flex-wrap:wrap">
           <!-- <div class="date border mb-3 mb-lg-0"> -->
           <span class="mb-3 mb-md-0">
-            <datetime class="borde" v-model="from" placeholder=" From : -DD-MM-YY-" />
+            <datetime
+              class="borde"
+              v-model="from"
+              placeholder=" From : -DD-MM-YY-"
+            />
           </span>
           <span class="mt- mt-sm-0 mb-sm-3 "
-            ><datetime class="borde" v-model="to" placeholder=" To : -DD-MM-YY-" />
+            ><datetime
+              class="borde"
+              v-model="to"
+              placeholder=" To : -DD-MM-YY-"
+            />
           </span>
           <!-- </div> -->
           <div class="btn btn-info py-2 mt-3 mt-md-0">Get Records</div>
@@ -45,7 +53,9 @@
           </table>
         </div>
         <div class="download">
-            <button class="btn btn-info">Download <i class="fa ml-1 fa-download"></i> </button>
+          <button class="btn btn-info">
+            Download <i class="fa ml-1 fa-download"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -53,8 +63,8 @@
 </template>
 
 <script>
-import Sidenav from "../../components/SideNav/SideNav1.vue";
-import Headernav from "../../components/HeaderNav/HeaderNav1.vue";
+import Sidenav from "../../../components/SideNav/SideNav1.vue";
+import Headernav from "../../../components/HeaderNav/HeaderNav1.vue";
 export default {
   name: "Report",
   components: {
@@ -80,7 +90,7 @@ export default {
 
 <style scoped>
 .tab-contents {
-    padding: 0px !important
+  padding: 0px !important;
 }
 
 /* .user-title {

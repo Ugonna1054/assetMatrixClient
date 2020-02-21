@@ -4,10 +4,9 @@
       :active="loading"
       :is-full-screen="true"
       :text="loadingText"
-      size = 45
+      size="45"
       spinner="bar-fade-scale"
-       color="#14899b"
-     
+      color="#14899b"
     />
   </div>
 </template>

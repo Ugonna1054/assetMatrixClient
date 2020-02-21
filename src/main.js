@@ -8,6 +8,7 @@ import "./utils/vue-toastr/toastr";
 import "./utils/vee-validate/vee-validate";
 import "./utils/chart/chart";
 import "./utils/vue-datetime/datetime";
+import "./utils/vue-numeric/numeric";
 
 Vue.config.productionTip = false;
 
