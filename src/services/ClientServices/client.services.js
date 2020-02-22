@@ -21,7 +21,6 @@ const clientService = {
       ApiService.get("/transactions/me")
         .then(({ data }) => {
           resolve(data);
-          window.console.log("customers is", data);
         })
         .catch(error => {
           reject(error.response.data);

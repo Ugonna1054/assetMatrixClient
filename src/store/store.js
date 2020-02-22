@@ -4,6 +4,7 @@ import VuexPersist from "vuex-persist";
 import User from "./modules/user/user";
 import Agent from "./modules/agent/agent";
 
+
 Vue.use(Vuex);
 
 const vuexPersist = new VuexPersist({

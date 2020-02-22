@@ -75,7 +75,7 @@
         <div class="dashboard-title row card mb-0">
           <div class="col-12">
             <p class="mb-3">Recent Transactions</p>
-            <div class="recent-transactions table-responsive">
+            <div class="recent-transactions table-responsive" v-if="TRANSACTIONS[0]">
               <table>
                 <tr>
                   <th>Reference Number</th>

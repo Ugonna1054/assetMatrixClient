@@ -80,7 +80,8 @@
  
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1399px) {
+
+@media only screen and (min-width: 1025px) and (max-width: 1599px) {
     //Sidenav
     .sidenav-wrapper {
       @include sidenav-responsive(17.5vw, 25vw);
@@ -94,17 +95,16 @@
 
     //User Management
     .create-user {
-      @include container (580px, hidden, hidden);
+      @include container (720px, hidden, hidden);
       padding:5px 10px;
       // top: 30px;
       .tab-contents {
-        max-height: 350px;
+        max-height: 500px;
       }
-    }
-    
+    } 
 }
 
-@media only screen and (min-width: 1400px) and (max-width: 2670px) {
+@media only screen and (min-width: 1600px) and (max-width: 2670px) {
      //Sidenav
      .sidenav-wrapper {
         @include sidenav-responsive (18vw, 25vw);

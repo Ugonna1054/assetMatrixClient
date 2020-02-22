@@ -394,10 +394,9 @@
                         </div>
                       </div>
                     </div>
-
                     <b-button
                       type="submit"
-                      class="btn mt-4 float-right mr-1 btn-info"
+                      class="btn mt-3 float-right mr-1 btn-info"
                       >SUBMIT</b-button
                     >
                   </form>
