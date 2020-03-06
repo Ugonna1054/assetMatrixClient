@@ -100,7 +100,7 @@
                       <div class="ro d-flex flex-wrap justify-content-end">
                         <button
                           @click="$router.push('/Loan/Apply')"
-                          class="btn btn-outline-info mt-3 mt-sm-0"
+                          class="btn btn-outline-secondary mt-3 mt-sm-0"
                         >
                           Proceed to Application
                         </button>

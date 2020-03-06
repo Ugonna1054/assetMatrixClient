@@ -13,6 +13,12 @@ const mutations = {
   },
   SET_USER_DETAILS(state, payload) {
     state.USER_DETAILS = payload;
+  },
+  SET_TRANSACTION_DETAILS(state, payload) {
+    state.TRANSACTION_DETAILS = payload;
+  },
+  SET_LOAN_DETAILS(state, payload) {
+    state.LOAN_DETAILS = payload;
   }
 };
 

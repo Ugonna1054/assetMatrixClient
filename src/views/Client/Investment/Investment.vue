@@ -22,11 +22,16 @@
               </div>
             </div>
             <!-- </div> -->
-            <div class="btn btn-info py-2 mt-3 mt-md-0" @click="$router.push('/Investment/Precheck')">Invest Now</div>
+            <div
+              class="btn btn-info py-2 mt-3 mt-md-0"
+              @click="$router.push('/Investment/Precheck')"
+            >
+              Invest Now
+            </div>
           </div>
 
           <table>
-            <tr style="background:#14899b; color:whitesmoke">
+            <tr style="color:whitesmoke" class="btn-secondary">
               <th>Amount</th>
               <th>Duration</th>
               <th>Date Applied</th>

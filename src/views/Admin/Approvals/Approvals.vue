@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-     <Loader :loading="loading" loading-text="please wait..." />
+    <Loader :loading="loading" loading-text="please wait..." />
     <Headernav />
     <Sidenav />
     <div class="create-user">
@@ -12,8 +12,7 @@
             :title-link-class="active1"
             title="Account Approval"
           >
-
-          <div class="line mt-3"></div>
+            <div class="line mt-3"></div>
             <div class="user-title card mt-3">
               <div class="col-12 tab-contents1">
                 <div class="top mb-2">
@@ -35,7 +34,7 @@
                 </div>
                 <div class="recent-transactions table-responsive">
                   <table>
-                    <tr style="background:#14899b; color:whitesmoke">
+                    <tr style="color:whitesmoke" class="bg-secondary">
                       <th>Name</th>
                       <th>Phone Number</th>
                       <th>Email Address</th>
@@ -58,18 +57,18 @@
             </div>
           </b-tab>
 
-           <!-- Transactions approval tab-->
+          <!-- Transactions approval tab-->
           <b-tab
             class="ml-3 mb-5"
             :title-link-class="active1"
             title="Transactions Approval"
+            :active="transaction"
           >
-
-          <div class="line mt-3"></div>
+            <div class="line mt-3"></div>
             <div class="user-title card mt-3">
               <div class="col-12 tab-contents1">
                 <div class="top mb-2">
-                  <div class="mb-3"> Transactions</div>
+                  <div class="mb-3">Transactions</div>
                   <div>
                     <div class="input-group float-right">
                       <input
@@ -87,28 +86,36 @@
                 </div>
                 <div class="recent-transactions table-responsive">
                   <table>
-                    <tr style="background:#14899b; color:whitesmoke">
+                    <tr style="color:whitesmoke" class="btn-secondary">
                       <th>Reference</th>
                       <th>Account</th>
                       <th>Amount</th>
                       <th>Agent</th>
+                      <th>Status</th>
                       <th>Date</th>
-                      <td class="text-primary action" @click="Transaction(index)">
-                        View
-                      </td>
+                      <th>Details</th>
                     </tr>
 
-                    <tr v-for="(transaction, index) in Transactions" :key="index">
+                    <tr
+                      v-for="(transaction, index) in Transactions"
+                      :key="index"
+                    >
                       <td>{{ truncString(transaction._id) }}</td>
                       <td>{{ transaction.account }}</td>
-                      <td>{{ transaction.type }}</td>
                       <td>&#8358; {{ formatAmount(transaction.amount) }}</td>
                       <td>
                         {{ transaction.agent.firstname }}
                         {{ transaction.agent.lastname }}
                         {{ transaction.agent.middlename }}
                       </td>
+                      <td>{{ transaction.status }}</td>
                       <td>{{ moment(transaction.createdAt) }}</td>
+                      <td
+                        class="text-primary action"
+                        @click="Transaction(index)"
+                      >
+                        View
+                      </td>
                       <!-- <td>
                         <b-progress
                           :value="value"
@@ -126,8 +133,13 @@
           </b-tab>
 
           <!-- Loan Approval Tab -->
-          <b-tab class="ml-3" :title-link-class="active1" title="Loan Approval">
-               <div class="line mt-3 mb-3"></div>
+          <b-tab
+            class="ml-3"
+            :title-link-class="active1"
+            title="Loan Approval"
+            :active="loan"
+          >
+            <div class="line mt-3 mb-3"></div>
             <div class="user-title card mt-3">
               <div class="col-12 tab-contents1">
                 <div class="top mb-2">
@@ -149,24 +161,34 @@
                 </div>
                 <div class="recent-transactions table-responsive">
                   <table>
-                    <tr style="background:#14899b; color:whitesmoke">
+                    <tr style="color:whitesmoke" class="bg-secondary">
                       <th>Name</th>
                       <th>Amount</th>
-                      <th>Duration</th>
+                      <th>Tenor</th>
+                      <th>Account</th>
+                      <th>Agent</th>
                       <th>Status</th>
                       <th>Date Applied</th>
                       <th>View</th>
-                      <th>Delete</th>
                     </tr>
 
-                    <tr v-for="(one, index) in 9" :key="index">
-                      <td>Ubaka Ugonna</td>
-                      <td>N 3,000</td>
-                      <td>6 Months</td>
-                      <td>Pending</td>
-                      <td>Something</td>
-                      <td class="text-primary action"  @click="Loan">View</td>
-                      <td class="text-danger  action">Delete</td>
+                    <tr v-for="(loan, index) in Loans" :key="index">
+                      <td>
+                        {{ loan.user.firstname }} {{ loan.user.lastname }}
+                      </td>
+                      <td>&#8358; {{ formatAmount(loan.amount) }}</td>
+                      <td>{{ loan.tenor }} Month(s)</td>
+                      <td>{{ loan.account }}</td>
+                      <td v-if="loan.agent">
+                        {{ loan.agent.firstname }} {{ loan.agent.lastname }}
+                      </td>
+                      <td v-else>Nil</td>
+                      <td>{{ loan.status }}</td>
+                      <td>{{ truncString1(moment(loan.createdAt)) }}</td>
+                      <td class="text-primary action" @click="Loan(index)">
+                        View
+                      </td>
+                      <!-- <td class="text-danger  action">Delete</td> -->
                     </tr>
                   </table>
                 </div>
@@ -179,6 +201,7 @@
             class="ml-3"
             :title-link-class="active1"
             title="Investment Approval"
+            :active="investment"
           >
             <div class="line mt-3 mb-0"></div>
             <div class="user-title card mt-3">
@@ -202,7 +225,7 @@
                 </div>
                 <div class="recent-transactions table-responsive">
                   <table>
-                    <tr style="background:#14899b; color:whitesmoke">
+                    <tr style="color:whitesmoke"  class="bg-secondary">
                       <th>Name</th>
                       <th>Amount</th>
                       <th>Duration</th>
@@ -218,7 +241,9 @@
                       <td>6 Months</td>
                       <td>Pending</td>
                       <td>Something</td>
-                      <td class="text-primary action"  @click="Investment">View</td>
+                      <td class="text-primary action" @click="Investment">
+                        View
+                      </td>
                       <td class="text-danger  action">Delete</td>
                     </tr>
                   </table>
@@ -236,9 +261,9 @@
 import Sidenav from "../../../components/SideNav/SideNav1.vue";
 import Headernav from "../../../components/HeaderNav/HeaderNav1.vue";
 import { clientService } from "../../../services/ClientServices/client.services";
+import { adminService } from "../../../services/AdminServices/admin.services";
 import Loader from "../../../utils/vue-loader/loader.vue";
-import moment from "moment"
-
+import moment from "moment";
 
 export default {
   name: "Approvals",
@@ -251,7 +276,12 @@ export default {
     return {
       loading: false,
       Customers: [],
-      Transactions:[]
+      Transactions: [],
+      Loans: [],
+      account: true,
+      loan: false,
+      transaction: false,
+      investment: false
     };
   },
   computed: {
@@ -260,6 +290,9 @@ export default {
     },
     active1() {
       return ["tab"];
+    },
+    routeQuery() {
+      return this.$route.query.p;
     }
   },
   methods: {
@@ -275,29 +308,35 @@ export default {
     truncString(str) {
       return str.substring(3, 13);
     },
+    //truncate string
+    truncString1(str) {
+      return str.toString().substring(0, 25);
+    },
     Account(index) {
       let customer = this.Customers[index];
-      this.$store.commit("SET_USER_DETAILS", customer)
+      this.$store.commit("SET_USER_DETAILS", customer);
       this.$router.push("/Admin/Approvals/Details");
     },
     Transaction(index) {
-      let customer = this.Customers[index];
-      this.$store.commit("SET_USER_DETAILS", customer)
+      let transaction = this.Transactions[index];
+      this.$store.commit("SET_TRANSACTION_DETAILS", transaction);
       this.$router.push("/Admin/Approvals/Details?p=1");
     },
-    Loan() {
+    Loan(index) {
+      let loan = this.Loans[index];
+      this.$store.commit("SET_LOAN_DETAILS", loan);
       this.$router.push("/Admin/Approvals/Details?p=2");
     },
     Investment() {
       this.$router.push("/Admin/Approvals/Details?p=3");
     },
-     //get all customers
+    //get all customers
     async getCustomers() {
       this.loading = true;
       await clientService
         .getCustomers()
         .then(res => {
-          this.$toastr.s("Fetched Succesfully");
+          //this.$toastr.s("Fetched Succesfully");
           this.Customers = res;
           window.console.log(this.Customers);
         })
@@ -316,17 +355,37 @@ export default {
         .then(res => {
           this.Transactions = res;
         })
+        .catch(() => {
+          //this.$toastr.e(err.message || err, "Failed");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    //get all loan  requests
+    async getLoan() {
+      this.loading = true;
+      await adminService
+        .getLoan()
+        .then(res => {
+          this.Loans = res;
+          //this.$toastr.s("loan Fetched Succesfully");
+        })
         .catch(err => {
-          this.$toastr.e(err.message || err, "Failed");
+          this.$toastr.e(err.message || err, "Failed!");
         })
         .finally(() => {
           this.loading = false;
         });
     }
   },
-   mounted() {
+  mounted() {
     this.getCustomers();
-    this.getTransaction()
+    this.getTransaction();
+    this.getLoan();
+    if (this.routeQuery == 1) return (this.transaction = true);
+    if (this.routeQuery == 2) return (this.loan = true);
+    if (this.routeQuery == 3) return (this.investment = true);
   }
 };
 </script>

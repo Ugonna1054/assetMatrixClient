@@ -127,7 +127,7 @@ export default {
           password: this.password
         })
         .then(res => {
-          window.console.log(res)
+          window.console.log(res);
           this.$toastr.s("Logged in Succesfully");
           if (res.isAdmin) return this.$router.push("/Admin/Dashboard");
           if (res.requiresChange === "false")

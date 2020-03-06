@@ -7,7 +7,9 @@ const state = {
   AUTH_TOKEN: "",
   IS_ADMIN: false,
   IS_AUTHENTICATED: false,
-  USER_DETAILS:{},
+  USER_DETAILS: {},
+  TRANSACTION_DETAILS: {},
+  LOAN_DETAILS:{}
 };
 
 export default { state, getters, mutations, actions };

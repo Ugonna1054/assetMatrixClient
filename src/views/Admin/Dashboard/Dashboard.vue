@@ -36,7 +36,10 @@
           </div>
           <!-- <div class="col-md-1"></div> -->
           <div class="card-item col-md-3 col-12 mb-3">
-            <p class="item1" style="color:violet">&#8358; 0</p>
+            <p class="item1" style="color:violet" v-if="LoanApproved">
+              &#8358; {{ formatAmount(LoanApproved) }}
+            </p>
+            <p class="item1" style="color:violet" v-else>&#8358; 0</p>
             <p class="item2">Total Loan Amount</p>
             <p class="line3"></p>
           </div>
@@ -75,7 +78,10 @@
         <div class="dashboard-title row card mb-0">
           <div class="col-12">
             <p class="mb-3">Recent Transactions</p>
-            <div class="recent-transactions table-responsive" v-if="TRANSACTIONS[0]">
+            <div
+              class="recent-transactions table-responsive"
+              v-if="TRANSACTIONS[0]"
+            >
               <table>
                 <tr>
                   <th>Reference Number</th>
@@ -88,7 +94,12 @@
                   <!-- <th>Performance Bar</th> -->
                 </tr>
 
-                <tr v-for="(transaction, index) in TRANSACTIONS" :key="index">
+                <tr
+                  v-for="(transaction, index) in TRANSACTIONS.slice(
+                    TRANSACTIONS.length - 10
+                  ).reverse()"
+                  :key="index"
+                >
                   <td>{{ truncString(transaction._id) }}</td>
                   <td>{{ transaction.account }}</td>
                   <td>{{ transaction.type }}</td>
@@ -98,7 +109,7 @@
                     {{ transaction.agent.lastname }}
                     {{ transaction.agent.middlename }}
                   </td>
-                   <td>
+                  <td>
                     {{ transaction.user.firstname }}
                     {{ transaction.user.lastname }}
                     {{ transaction.user.middlename }}
@@ -131,7 +142,7 @@ import Headernav from "../../../components/HeaderNav/HeaderNav1.vue";
 import { mapState } from "vuex";
 import { adminService } from "../../../services/AdminServices/admin.services";
 import Loader from "../../../utils/vue-loader/loader.vue";
-import moment from "moment"
+import moment from "moment";
 
 export default {
   name: "Dashboard",
@@ -145,7 +156,8 @@ export default {
     return {
       value: 50,
       max: 100,
-      loading: false
+      loading: false,
+      Loan: []
     };
   },
   computed: {
@@ -158,11 +170,18 @@ export default {
       TRANSACTIONS: state => state.Agent.TRANSACTIONS
     }),
     transactionDeposit() {
+      if (!this.TRANSACTIONS[0]) return;
       let deposit = this.TRANSACTIONS.filter(data => data.type == "deposit");
       let total = 0;
       deposit.forEach(elem => {
         total += elem.amount;
       });
+      return total;
+    },
+    LoanApproved() {
+      let approved = this.Loan.filter(item => item.status == "Approved");
+      let total = 0;
+      approved.forEach(item => (total += item.amount));
       return total;
     }
   },
@@ -173,8 +192,8 @@ export default {
     },
 
     //moment
-    moment (date) {
-      return moment(date)
+    moment(date) {
+      return moment(date);
     },
 
     //truncate reference number
@@ -214,11 +233,28 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    //get all loan  requests
+    async getLoan() {
+      this.loading = true;
+      await adminService
+        .getLoan()
+        .then(res => {
+          this.Loan = res;
+          //this.$toastr.s("loan Fetched Succesfully");
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   },
   mounted() {
     this.getAgents();
     this.getTransactions();
+    this.getLoan();
   }
 };
 </script>

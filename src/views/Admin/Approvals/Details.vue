@@ -52,7 +52,7 @@
                   </table>
                 </div>
                 <!-- Button -->
-                <div class=" mt-3 d-flex justify-content-between">
+                <div class="mt-3 d-flex justify-content-between">
                   <div style="flex-grow:5"></div>
                   <div
                     class="d-flex justify-content-around"
@@ -75,64 +75,67 @@
             </div>
           </b-tab>
 
-           <!-- Transactions approvals tab -->
+          <!-- Transactions approvals tab -->
           <b-tab
             :active="transaction"
             class="ml-3 mb-5"
             :title-link-class="active1"
             title="Transactions Approval"
           >
-            <div class="user-title card mt-5">
+            <div class="user-title card mt-5" v-if="transactions">
               <div class="col-12 tab-contents1">
                 <div class="top mb-2">
-                  <div class="mb-3">Account Request Details</div>
+                  <div class="mb-3">Transaction Details</div>
                 </div>
                 <div class="table-responsive">
                   <table class="table1">
                     <tr class="row">
-                      <td class="col-6 col-md-2">Name</td>
+                      <td class="col-6 col-md-2">Account Name</td>
                       <td class="col-6 col-md-4">
-                        {{ customer.firstname }} {{ customer.middlename }}
-                        {{ customer.lastname }}
+                        {{ transactions.user.firstname }}
+                        {{ transactions.user.lastname }}
                       </td>
-                      <td class="col-6 col-md-2">Email Address</td>
-                      <td class="col-6 col-md-4">{{ customer.email }}</td>
+                      <td class="col-6 col-md-2">Account Number</td>
+                      <td class="col-6 col-md-4">{{ transactions.account }}</td>
                     </tr>
                     <tr class="row">
-                      <td class="col-md-2 col-6">Phone Number</td>
-                      <td class="col-md-4 col-6">{{ customer.phone }}</td>
-                      <td class="col-md-2 col-6">Account Number</td>
+                      <td class="col-md-2 col-6">Agent</td>
                       <td class="col-md-4 col-6">
-                        {{ customer.account.accounts[0].number }}
+                        {{ transactions.agent.firstname }}
+                        {{ transactions.agent.lastname }}
+                      </td>
+                      <td class="col-md-2 col-6">Amout</td>
+                      <td class="col-md-4 col-6">
+                        &#8358; {{ formatAmount(transactions.amount) }}
                       </td>
                     </tr>
                     <tr class="row">
-                      <td class="col-md-2 col-6">Gender</td>
-                      <td class="col-md-4 col-6">{{ customer.gender }}</td>
-                      <td class="col-md-2 col-6">Home Address</td>
-                      <td class="col-md-4 col-6">{{ customer.address }}</td>
-                    </tr>
-                    <tr class="row">
-                      <td class="col-md-2 col-6">Date of Birth</td>
-                      <td class="col-md-4 col-6">{{ customer.dob }}</td>
-                      <td class="col-md-2 col-6">Date Applied</td>
-                      <td class="col-md-4 col-6">{{ customer.createdAt }}</td>
+                      <td class="col-md-2 col-6">Date</td>
+                      <td class="col-md-4 col-6">
+                        {{ moment(transactions.createdAt) }}
+                      </td>
+                      <td class="col-md-2 col-6">Reference</td>
+                      <td class="col-md-4 col-6">
+                        {{ truncString(transactions._id) }}
+                      </td>
                     </tr>
                   </table>
                 </div>
-                <!-- Button -->
-                <div class=" mt-3 d-flex justify-content-between">
+                <div class="mt-3 d-flex justify-content-between">
                   <div style="flex-grow:5"></div>
                   <div
                     class="d-flex justify-content-around"
                     style="flex-grow:1"
                   >
-                    <div class="btn btn-outline-success" @click="updateApprove">
+                    <div
+                      class="btn btn-outline-success"
+                      @click="updateApproveT"
+                    >
                       Approve
                     </div>
                     <div
                       class="btn btn-outline-danger mr-md-2"
-                      @click="updateDecline"
+                      @click="updateDeclineT"
                     >
                       Decline
                     </div>
@@ -156,43 +159,69 @@
                 <div class="top mb-2">
                   <div class="mb-3">Loan Request Details</div>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive" v-if="loans">
                   <table class="table1">
                     <tr class="row">
                       <td class="col-6 col-md-2">Name</td>
-                      <td class="col-6 col-md-4">Ugonna Ubaks</td>
+                      <td class="col-6 col-md-4">
+                        {{ loans.user.firstname }} {{ loans.user.middlename }}
+                        {{ loans.user.lastname }}
+                      </td>
                       <td class="col-6 col-md-2">Email Address</td>
-                      <td class="col-6 col-md-4">Transgehhhnnr@gmail.com</td>
+                      <td class="col-6 col-md-4">{{ loans.user.email }}</td>
                     </tr>
                     <tr class="row">
                       <td class="col-md-2 col-6">Phone Number</td>
-                      <td class="col-md-4 col-6">09093939333</td>
+                      <td class="col-md-4 col-6">{{ loans.user.phone }}</td>
                       <td class="col-md-2 col-6">Account Number</td>
-                      <td class="col-md-4 col-6">636363636</td>
+                      <td class="col-md-4 col-6">{{ loans.account }}</td>
                     </tr>
                     <tr class="row">
-                      <td class="col-md-2 col-6">Gender</td>
-                      <td class="col-md-4 col-6">Ugonna Ubaks</td>
-                      <td class="col-md-2 col-6">Home Address</td>
-                      <td class="col-md-4 col-6">1, Amechi street</td>
+                      <td class="col-md-2 col-6">Loan Amount</td>
+                      <td class="col-md-4 col-6">
+                        &#8358; {{ formatAmount(loans.amount) }}
+                      </td>
+                      <td class="col-md-2 col-6">Tenor</td>
+                      <td class="col-md-4 col-6">{{ loans.tenor }}</td>
                     </tr>
                     <tr class="row">
-                      <td class="col-md-2 col-6">Date of Birth</td>
-                      <td class="col-md-4 col-6">July, 13 2020</td>
+                      <td class="col-md-2 col-6">Loan Purpose</td>
+                      <td class="col-md-4 col-6">{{ loans.purpose }}</td>
+                      <td class="col-md-2 col-6">Agent</td>
+                      <td class="col-md-4 col-6" v-if="loans.agent">
+                        {{ loans.agent.firstname }} {{ loans.agent.middlename }}
+                        {{ loans.agent.lastname }}
+                      </td>
+                      <td v-else>Nil</td>
+                    </tr>
+                    <tr class="row">
                       <td class="col-md-2 col-6">Date Applied</td>
-                      <td class="col-md-4 col-6">Sept, 20, 2019</td>
+                      <td class="col-md-4 col-6">
+                        {{ moment(loans.createdAt) }}
+                      </td>
+                      <td class="col-md-2 col-6">Status</td>
+                      <td class="col-md-4 col-6">{{ loans.status }}</td>
                     </tr>
                   </table>
                 </div>
-                <!-- Button -->
-                <div class=" mt-3 d-flex justify-content-between">
+                <div class="mt-3 d-flex justify-content-between">
                   <div style="flex-grow:5"></div>
                   <div
                     class="d-flex justify-content-around"
                     style="flex-grow:1"
                   >
-                    <div class="btn btn-outline-success">Approve</div>
-                    <div class="btn btn-outline-danger mr-md-2">Decline</div>
+                    <div
+                      class="btn btn-outline-success"
+                      @click="updateApproveL"
+                    >
+                      Approve
+                    </div>
+                    <div
+                      class="btn btn-outline-danger mr-md-2"
+                      @click="updateDeclineL"
+                    >
+                      Decline
+                    </div>
                     <div></div>
                   </div>
                   <div></div>
@@ -243,7 +272,7 @@
                   </table>
                 </div>
                 <!-- Button -->
-                <div class=" mt-3 d-flex justify-content-between">
+                <div class="mt-3 d-flex justify-content-between">
                   <div style="flex-grow:5"></div>
                   <div
                     class="d-flex justify-content-around"
@@ -270,6 +299,8 @@ import Headernav from "../../../components/HeaderNav/HeaderNav1.vue";
 import Loader from "../../../utils/vue-loader/loader.vue";
 import { adminService } from "../../../services/AdminServices/admin.services";
 import { mapState } from "vuex";
+import moment from "moment";
+
 export default {
   name: "Details",
   components: {
@@ -282,7 +313,7 @@ export default {
       loading: false,
       account: true,
       loan: false,
-      transaction:false,
+      transaction: false,
       investment: false
     };
   },
@@ -297,10 +328,25 @@ export default {
       return this.$route.query.p;
     },
     ...mapState({
-      customer: state => state.User.USER_DETAILS
+      customer: state => state.User.USER_DETAILS,
+      transactions: state => state.User.TRANSACTION_DETAILS,
+      loans: state => state.User.LOAN_DETAILS
     })
   },
   methods: {
+    //format amount
+    formatAmount(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); //this function automatically adds commas to the value where necessary
+    },
+    //moment
+    moment(date) {
+      return moment(date);
+    },
+    //truncate string
+    truncString(str) {
+      return str.substring(3, 13);
+    },
+    //Approve account
     async updateApprove() {
       this.loading = true;
       await adminService
@@ -309,6 +355,7 @@ export default {
         })
         .then(res => {
           this.$toastr.s(res.message, "Fetched Succesfully");
+          this.$router.push("/Admin/Approvals");
         })
         .catch(err => {
           this.$toastr.e(err.message || err, "Failed!");
@@ -317,6 +364,7 @@ export default {
           this.loading = false;
         });
     },
+    //Decline account
     async updateDecline() {
       this.loading = true;
       await adminService
@@ -325,6 +373,80 @@ export default {
         })
         .then(res => {
           this.$toastr.s(res.message, "Fetched Succesfully");
+          this.$router.push("/Admin/Approvals");
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    //Approve transaction
+    async updateApproveT() {
+      this.loading = true;
+      await adminService
+        .updateApproveT({
+          id: this.transactions._id,
+          agentId: this.transactions.agent._id
+        })
+        .then(res => {
+          this.$toastr.s(res.message, "Fetched Succesfully");
+          this.$router.push("/Admin/Approvals?p=1");
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    //Decline transaction
+    async updateDeclineT() {
+      this.loading = true;
+      await adminService
+        .updateDeclineT({
+          id: this.transactions._id
+        })
+        .then(res => {
+          this.$toastr.s(res.message, "Fetched Succesfully");
+          this.$router.push("/Admin/Approvals?p=1");
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    //Approve Loan
+    async updateApproveL() {
+      this.loading = true;
+      await adminService
+        .updateApproveL({
+          id: this.loans._id
+        })
+        .then(res => {
+          this.$toastr.s(res.message, "Fetched Succesfully");
+          this.$router.push("/Admin/Approvals?p=2");
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    //Decline Loan
+    async updateDeclineL() {
+      this.loading = true;
+      await adminService
+        .updateDeclineL({
+          id: this.loans._id
+        })
+        .then(res => {
+          this.$toastr.s(res.message, "Fetched Succesfully");
+          this.$router.push("/Admin/Approvals?p=1");
         })
         .catch(err => {
           this.$toastr.e(err.message || err, "Failed!");

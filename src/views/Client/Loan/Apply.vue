@@ -1,14 +1,15 @@
 <template>
   <div class="main-container">
+    <Loader :loading="loading" loading-text="please wait..." />
     <Headernav johndoe="Client" />
     <Sidenav />
     <div class="create-user">
       <div class="user-title mb-3 px-3">Loan Application Form</div>
 
-      <div class="col user-title p-0 ">
+      <div class="col user-title p-0">
         <b-tabs pills card :active-nav-item-class="current">
           <!-- Personal Information -->
-          <b-tab :title-link-class="active1" title="Personal Information">
+          <!-- <b-tab :title-link-class="active1" title="Personal Information">
             <ValidationObserver v-slot="{ passes }">
               <form @submit.prevent="passes(next_page)">
                 <div class="tab-contents">
@@ -219,7 +220,6 @@
                               id="meansOfId"
                               class="browser-default custom-select"
                             >
-                              <!-- <option value=""  >Choose State</option> -->
                               <option value="International Passport"
                                 >International Passport</option
                               >
@@ -390,58 +390,56 @@
                 </div>
               </form>
             </ValidationObserver>
-          </b-tab>
+          </b-tab>-->
 
           <!-- Loan Details -->
           <b-tab :title-link-class="active1" title="Loan Details">
             <ValidationObserver v-slot="{ passes }">
-              <form @submit.prevent="passes(next_page)">
+              <form @submit.prevent="passes(postLoan)">
                 <div class="tab-contents">
                   <div class="form-row first">
                     <div class="col-md-5 mb-3">
                       <ValidationProvider
                         name="principal"
-                        rules="required|min_value:100000|max_value:3000000"
+                        rules="required|min_value:1000|max_value:1000000"
                         v-slot="{ errors }"
                       >
-                        <label for="v"
-                          >Loan Amount<span class="text-danger">*</span></label
-                        >
+                        <label for="v">
+                          Loan Amount
+                          <span class="text-danger">*</span>
+                        </label>
                         <div class="input-group">
                           <div class="input-group-prepend">
-                            <span
-                              class="input-group-text"
-                              id="inputGroupPrepend"
-                              >&#8358;</span
-                            >
+                            <span class="input-group-text" id="inputGroupPrepend">&#8358;</span>
                           </div>
-                          <input
-                            type="text"
-                            v-model="principal"
+                          <vue-numeric
+                            v-model="amount"
                             class="form-control"
-                            placeholder="Enter Amount"
                             name="Loan Amount"
-                          />
+                            placeholder="0"
+                            separator=","
+                          ></vue-numeric>
                         </div>
-                        <span class="text-danger" style="font-size:15px">
-                          (min: &#8358;100,000 max: &#8358;3,000,000)
-                        </span>
+                        <!-- <span class="text-danger" style="font-size:15px"
+                          >(min: &#8358;100,000 max: &#8358;3,000,000)</span
+                        >-->
                         <br />
                         <span style="font-size:13px; color:red">
-                          <span v-if="errors[0]"
-                            ><i class="fas fa-ban"></i
-                          ></span>
-                          {{ errors[0] }}</span
-                        >
+                          <span v-if="errors[0]">
+                            <i class="fas fa-ban"></i>
+                          </span>
+                          {{ errors[0] }}
+                        </span>
                       </ValidationProvider>
                     </div>
 
                     <div class="col-md-2"></div>
 
                     <div class="col-md-5 mb-3">
-                      <label for="validationCustom02"
-                        >Loan Tenor <span class="text-danger">*</span></label
-                      >
+                      <label for="validationCustom02">
+                        Loan Tenor
+                        <span class="text-danger">*</span>
+                      </label>
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span
@@ -449,8 +447,7 @@
                             style="cursor:pointer"
                             v-on:click="minus"
                             id="inputGroupPrepend"
-                            >-</span
-                          >
+                          >-</span>
                         </div>
                         <input
                           type="text"
@@ -468,14 +465,13 @@
                             style="cursor:pointer"
                             v-on:click="plus"
                             id="inputGroupPrepend"
-                            >+</span
-                          >
+                          >+</span>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <div class="form-row second">
+                  <!-- <div class="form-row second">
                     <div class="col-md-5 mt-3 mb-3">
                       Any Indebtedness? <span class="text-danger">*</span>
                       <br class="d-block d-sm-none" />
@@ -554,10 +550,10 @@
                         >
                       </ValidationProvider>
                     </div>
-                  </div>
+                  </div>-->
 
                   <div class="form-row third mb-3">
-                    <div class="col-md-5 mb-3 mt-3" v-if="isPickedd">
+                    <!-- <div class="col-md-5 mb-3 mt-3" v-if="isPickedd">
                       <ValidationProvider
                         name="Loan Indebtedness"
                         rules="required"
@@ -580,9 +576,9 @@
                           {{ errors[0] }}</span
                         >
                       </ValidationProvider>
-                    </div>
+                    </div>-->
 
-                    <div class="col-md-5 mt-2" v-else>
+                    <!-- <div class="col-md-5 mt-2" >
                       <ValidationProvider
                         name="loanPurpose"
                         rules="required"
@@ -606,35 +602,7 @@
                           {{ errors[0] }}</span
                         >
                       </ValidationProvider>
-                    </div>
-
-                    <div class="col-md-2"></div>
-
-                    <div class="col-md-5 mt-3 loanPurpose" v-if="isPickedd">
-                      <ValidationProvider
-                        name="loanPurpose"
-                        rules="required"
-                        v-slot="{ errors }"
-                      >
-                        <label for="exampleFormControlTextarea1"
-                          >Loan Purpose
-                          <span class="text-danger">*</span></label
-                        >
-                        <textarea
-                          v-model="loanPurpose"
-                          name="loanPurpose"
-                          class="form-control text-area"
-                          id="exampleFormControlTextarea1"
-                          rows="3"
-                        ></textarea>
-                        <span style="font-size:13px; color:red">
-                          <span v-if="errors[0]"
-                            ><i class="fas fa-ban"></i
-                          ></span>
-                          {{ errors[0] }}</span
-                        >
-                      </ValidationProvider>
-                    </div>
+                    </div>-->
                   </div>
 
                   <div class="form-row">
@@ -644,44 +612,42 @@
                         rules="required|numeric|min:10|max:10"
                         v-slot="{ errors }"
                       >
-                        <label for="" class="d-inline"
-                          >Account Number
-                          <span class="text-danger">*</span></label
-                        >
+                        <label for class="d-inline">
+                          Account Number
+                          <span class="text-danger">*</span>
+                        </label>
                         <input
+                          disabled
                           name="Account_Number"
-                          v-model="accountNumber"
+                          v-model="account"
                           type="text"
                           class="form-control"
                         />
                         <span style="font-size:13px; color:red">
-                          <span v-if="errors[0]"
-                            ><i class="fas fa-ban"></i
-                          ></span>
-                          {{ errors[0] }}</span
-                        >
+                          <span v-if="errors[0]">
+                            <i class="fas fa-ban"></i>
+                          </span>
+                          {{ errors[0] }}
+                        </span>
                       </ValidationProvider>
                     </div>
 
                     <div class="col-md-2"></div>
 
                     <div class="col-md-5">
-                      <ValidationProvider
-                        name="Bank_Name"
-                        rules="required"
-                        v-slot="{ errors }"
-                      >
-                        <label for="" class="d-inline"
-                          >Bank <span class="text-danger">*</span></label
-                        >
+                      <ValidationProvider name="Bank_Name" rules="required" v-slot="{ errors }">
+                        <label for class="d-inline">
+                          Bank
+                          <span class="text-danger">*</span>
+                        </label>
                         <select
                           class="browser-default custom-select"
                           name="Bank_Name"
-                          v-model="bankName"
+                          v-model="bank"
                         >
                           <option>Choose</option>
-                          <option selected value="access">Access Bank</option>
-                          <option value="citibank">Citibank</option>
+                          <option selected value="asset matrix">Asset Matrix</option>
+                          <!-- <option value="citibank">Citibank</option>
                           <option value="ecobank">Ecobank</option>
                           <option value="fidelity">Fidelity Bank</option>
                           <option value="first bank">First Bank </option>
@@ -708,22 +674,52 @@
                           >
                           <option value="unity">Unity Bank</option>
                           <option value="wema">Wema Bank</option>
-                          <option value="zenith">Zenith Bank</option>
+                          <option value="zenith">Zenith Bank</option>-->
                         </select>
+                        <span style="font-size:13px; color:red">
+                          <span v-if="errors[0]">
+                            <i class="fas fa-ban"></i>
+                          </span>
+                          {{ errors[0] }}
+                        </span>
+                      </ValidationProvider>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="col-md-5 mt-3 loanPurpose">
+                      <ValidationProvider name="loanPurpose" rules="required" v-slot="{ errors }">
+                        <label for="exampleFormControlTextarea1">
+                          Loan Purpose
+                          <span class="text-danger">*</span>
+                        </label>
+                        <textarea
+                          v-model="loanPurpose"
+                          name="loanPurpose"
+                          class="form-control text-area"
+                          id="exampleFormControlTextarea1"
+                          rows="3"
+                        ></textarea>
+                        <span style="font-size:13px; color:red">
+                          <span v-if="errors[0]">
+                            <i class="fas fa-ban"></i>
+                          </span>
+                          {{ errors[0] }}
+                        </span>
                       </ValidationProvider>
                     </div>
                   </div>
                 </div>
                 <div class="d-flex mt-3 justify-content-between">
-                  <button class="btn btn-info">Previous</button>
-                  <button class="btn btn-info">Next</button>
+                  <button class="btn btn-info" @click="$router.go(-1)">Previous</button>
+                  <button class="btn btn-info" type="submit">Submit</button>
                 </div>
               </form>
             </ValidationObserver>
           </b-tab>
 
           <!-- Work Information -->
-          <b-tab :title-link-class="active2" class="" title="Work Information">
+          <!-- <b-tab :title-link-class="active2" class="" title="Work Information">
             <ValidationObserver v-slot="{ passes }">
               <form @submit.prevent="passes(next_page)">
                 <div class="tab-contents">
@@ -1012,15 +1008,14 @@
                 </div>
               </form>
             </ValidationObserver>
-          </b-tab>
+          </b-tab>-->
 
           <!-- Guarantor Information -->
-          <b-tab :title-link-class="active2" class="" title="Guarantor Details">
+          <!-- <b-tab :title-link-class="active2" class="" title="Guarantor Details">
             <ValidationObserver v-slot="{ passes }">
               <form @submit.prevent="passes(next_page)">
                 <div class="tab-contents">
                   <section class="section-1 mb-3">
-                    <!-- <span class="mb-3" style="color:blue; font-weight:400">Guarantor 1</span> -->
                     <div class="row">
                       <div class="col-md-6">
                         <div class="mb-3">
@@ -1161,9 +1156,7 @@
                               class="form-control"
                               placeholder=""
                             />
-                            <!-- <span class="text-danger" style="font-size:13px">
-                              ** to be filled by guarantor</span
-                            > -->
+
                             <div
                               class="text-warning mt-2"
                               v-if="phoneDuplicate1"
@@ -1197,9 +1190,6 @@
                               rows="3"
                               placeholder=""
                             ></textarea>
-                            <!-- <span class="text-danger" style="font-size:13px">
-                              ** to be filled by guarantor</span
-                            > -->
                             <span style="font-size:13px; color:red">
                               <span v-if="errors[0]"
                                 ><i class="fas fa-ban"></i
@@ -1253,12 +1243,6 @@
                                     />
                                   </label>
                                   <br />
-                                  <!-- <span
-                                    class="text-danger"
-                                    style="font-size:13px"
-                                  >
-                                    ** to be filled by guarantor</span
-                                  > -->
                                   <span style="font-size:13px; color:red">
                                     <span v-if="errors[0]"
                                       ><i class="fas fa-ban"></i
@@ -1308,12 +1292,6 @@
                                     />
                                   </label>
                                   <br />
-                                  <!-- <span
-                                    class="text-danger"
-                                    style="font-size:13px"
-                                  >
-                                    ** to be filled by guarantor</span
-                                  > -->
                                   <span style="font-size:13px; color:red">
                                     <span v-if="errors[0]"
                                       ><i class="fas fa-ban"></i
@@ -1368,13 +1346,13 @@
                     </div>
                   </section>
                 </div>
-                 <div class="d-flex mt-3 justify-content-between">
+                <div class="d-flex mt-3 justify-content-between">
                   <button class="btn btn-info">Previous</button>
                   <button class="btn btn-info">Submit</button>
                 </div>
               </form>
             </ValidationObserver>
-          </b-tab>
+          </b-tab>-->
         </b-tabs>
       </div>
     </div>
@@ -1384,38 +1362,44 @@
 <script>
 import Sidenav from "../../../components/SideNav/SideNav2.vue";
 import Headernav from "../../../components/HeaderNav/HeaderNav1.vue";
-//import VueNumeric from "vue-numeric";
+import Loader from "../../../utils/vue-loader/loader.vue";
+import VueNumeric from "vue-numeric";
+import { clientService } from "../../../services/ClientServices/client.services";
 import { ValidationObserver, ValidationProvider } from "vee-validate";
+import { mapState } from "vuex";
 export default {
   name: "Apply",
   components: {
     Sidenav,
     Headernav,
-    // VueNumeric
     ValidationObserver,
-    ValidationProvider
+    ValidationProvider,
+    Loader,
+    VueNumeric
   },
   data() {
     return {
-      price: "",
-      principal: null,
+      amount: 0,
       tenor: 0,
-      mra: 40000,
-      isPickedd: false,
-      isPicked: "yes",
-      meansOfId: ""
+      loanPurpose: "",
+      bank: "",
+      loading: false
     };
   },
   computed: {
     current() {
       return ["current2"];
+    },
+    ...mapState({
+      USER_DATA: state => state.User.USER_DATA
+    }),
+    account() {
+      return this.USER_DATA.account.accounts[0].number;
     }
   },
   watch: {
-    isPicked(newval) {
-      if (newval == "yes") return (this.isPickedd = true);
-
-      if (newval == "no") return (this.isPickedd = false);
+    account(newval) {
+      if (newval.length == 10) this.validateAccount();
     }
   },
   methods: {
@@ -1433,54 +1417,27 @@ export default {
 
       this.others = false;
     },
-
-    calculate() {
-      let a = 13.5;
-      let b = 16.7;
-      let c = 19.96;
-      let d = 23.28;
-      let e = 26.66;
-      let f = 30;
-
-      let tenor = this.tenor;
-      let principal = this.principal;
-
-      if (tenor == 1) {
-        let mra = (principal * (a / 100 + 1)) / tenor;
-        let formattedMra = this.formatAmount(mra);
-        this.$store.dispatch("updateMra", formattedMra);
-      }
-
-      if (tenor == 2) {
-        let mra = (principal * (b / 100 + 1)) / tenor;
-        let formattedMra = this.formatAmount(mra);
-        this.$store.dispatch("updateMra", formattedMra);
-      }
-
-      if (tenor == 3) {
-        let mra = (principal * (c / 100 + 1)) / tenor;
-        let formattedMra = this.formatAmount(mra);
-        this.$store.dispatch("updateMra", formattedMra);
-      }
-
-      if (tenor == 4) {
-        let mra = (principal * (d / 100 + 1)) / tenor;
-        let newMra = Math.round(mra * 100) / 100;
-        let formattedMra = this.formatAmount(newMra);
-        this.$store.dispatch("updateMra", formattedMra);
-      }
-
-      if (tenor == 5) {
-        let mra = (principal * (e / 100 + 1)) / tenor;
-        let formattedMra = this.formatAmount(mra);
-        this.$store.dispatch("updateMra", formattedMra);
-      }
-
-      if (tenor == 6) {
-        let mra = (principal * (f / 100 + 1)) / tenor;
-        let formattedMra = this.formatAmount(mra);
-        this.$store.dispatch("updateMra", formattedMra);
-      }
+    //Post Loan
+    async postLoan() {
+      this.loading = true;
+      await clientService
+        .postLoan({
+          amount: this.amount,
+          tenor: this.tenor,
+          account: this.account,
+          purpose: this.loanPurpose,
+          bank: this.bank
+        })
+        .then(res => {
+          this.$toastr.s(res.message, "Posted Succesfully");
+          this.$router.push("/Loan");
+        })
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed!");
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 };

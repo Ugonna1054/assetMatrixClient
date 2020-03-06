@@ -95,7 +95,73 @@ const adminService = {
           reject(error.response.data);
         });
     });
-  }
+  },
+
+  //Update Transaction status to Approved
+  updateApproveT: ({ id, agentId }) => {
+    return new Promise(function(resolve, reject) {
+      ApiService.put(`/transactions/update/approve/${id}`, {
+        agentId
+      })
+        .then(({ data }) => {
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error.response.data);
+        });
+    });
+  },
+
+  //Update Transaction status to Declined
+  updateDeclineT: ({ id }) => {
+    return new Promise(function(resolve, reject) {
+      ApiService.put(`/transactions/update/decline/${id}`)
+        .then(({ data }) => {
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error.response.data);
+        });
+    });
+  },
+
+  //Get all loans for all users
+  getLoan: () => {
+    return new Promise(function(resolve, reject) {
+      ApiService.get("/loans")
+        .then(({ data }) => {
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error.response.data);
+        });
+    });
+  },
+
+   //Update Loan status to Approved
+   updateApproveL: ({ id }) => {
+    return new Promise(function(resolve, reject) {
+      ApiService.put(`/loans/update/approve/${id}`)
+        .then(({ data }) => {
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error.response.data);
+        });
+    });
+  },
+   //Update Transaction status to Declined
+   updateDeclineL: ({ id }) => {
+    return new Promise(function(resolve, reject) {
+      ApiService.put(`/loans/update/decline/${id}`)
+        .then(({ data }) => {
+          resolve(data);
+        })
+        .catch(error => {
+          reject(error.response.data);
+        });
+    });
+  },
 };
 
 export { adminService };
