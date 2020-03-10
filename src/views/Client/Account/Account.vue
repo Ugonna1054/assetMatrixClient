@@ -8,12 +8,10 @@
       <div class="main-content">
         <!-- <div class="content-wrapper"> -->
         <div class="dashboard-title row card mb-5">
-          <div class="col-12">
-            Account Summary
-          </div>
+          <div class="col-12">Account Summary</div>
         </div>
-        <div class="dashboard-cards row mb-2 mt-n4 ">
-          <div class=" card-item col-md-3 col-12 mb-3">
+        <div class="dashboard-cards row mb-2 mt-n4">
+          <div class="card-item col-md-3 col-12 mb-3">
             <p class="item1" style="color:salmon">
               &#8358; {{ formatAmount(USER_DATA.account.accounts[0].balance) }}
             </p>
@@ -53,8 +51,14 @@
                   <th>Date</th>
                 </tr>
 
-                <tr v-for="(transaction, index) in Transactions" :key="index">
-                  <td>{{ truncString(transaction._id) }}</td>
+                <tr
+                  v-for="(transaction, index) in slicedTransctions"
+                  :key="index"
+                >
+                  <td v-if="transaction.reference">
+                    {{ transaction.reference }}
+                  </td>
+                  <td v-else>{{ truncString(transaction._id) }}</td>
                   <td>{{ transaction.account }}</td>
                   <td>{{ transaction.type }}</td>
                   <td>&#8358; {{ formatAmount(transaction.amount) }}</td>
@@ -111,6 +115,20 @@ export default {
     LoanApproved() {
       let approved = this.Loan.filter(item => item.status == "Approved");
       return approved;
+    },
+    slicedTransctions() {
+      let transactions = this.Transactions;
+
+      if (transactions.length >= 10) {
+        transactions = transactions.slice(
+          transactions.length - 10,
+          transactions.length
+        );
+
+        return transactions.reverse();
+      }
+
+      return transactions.reverse();
     }
   },
   methods: {

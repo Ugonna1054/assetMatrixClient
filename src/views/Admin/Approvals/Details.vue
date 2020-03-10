@@ -89,18 +89,18 @@
                 </div>
                 <div class="table-responsive" v-if="transactions">
                   <table class="table1">
-                    <tr class="row">
+                    <tr class="row" v-if="transactions.user">
                       <td class="col-6 col-md-2">Account Name</td>
-                      <td class="col-6 col-md-4" v-if="transactions.user">
+                      <td class="col-6 col-md-4">
                         {{ transactions.user.firstname }}
                         {{ transactions.user.lastname }}
                       </td>
                       <td class="col-6 col-md-2">Account Number</td>
                       <td class="col-6 col-md-4">{{ transactions.account }}</td>
                     </tr>
-                    <tr class="row">
+                    <tr class="row" v-if="transactions.agent">
                       <td class="col-md-2 col-6">Agent</td>
-                      <td class="col-md-4 col-6" v-if="transactions.agent">
+                      <td class="col-md-4 col-6">
                         {{ transactions.agent.firstname }}
                         {{ transactions.agent.lastname }}
                       </td>
