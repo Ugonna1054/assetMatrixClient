@@ -18,7 +18,7 @@
                 <div class="top mb-2">
                   <div class="mb-3">Account Request Details</div>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive" v-if="customer">
                   <table class="table1">
                     <tr class="row">
                       <td class="col-6 col-md-2">Name</td>
@@ -33,7 +33,7 @@
                       <td class="col-md-2 col-6">Phone Number</td>
                       <td class="col-md-4 col-6">{{ customer.phone }}</td>
                       <td class="col-md-2 col-6">Account Number</td>
-                      <td class="col-md-4 col-6">
+                      <td class="col-md-4 col-6" v-if="customer.account">
                         {{ customer.account.accounts[0].number }}
                       </td>
                     </tr>
@@ -82,16 +82,16 @@
             :title-link-class="active1"
             title="Transactions Approval"
           >
-            <div class="user-title card mt-5" v-if="transactions">
+            <div class="user-title card mt-5">
               <div class="col-12 tab-contents1">
                 <div class="top mb-2">
                   <div class="mb-3">Transaction Details</div>
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive" v-if="transactions">
                   <table class="table1">
                     <tr class="row">
                       <td class="col-6 col-md-2">Account Name</td>
-                      <td class="col-6 col-md-4">
+                      <td class="col-6 col-md-4" v-if="transactions.user">
                         {{ transactions.user.firstname }}
                         {{ transactions.user.lastname }}
                       </td>
@@ -100,11 +100,11 @@
                     </tr>
                     <tr class="row">
                       <td class="col-md-2 col-6">Agent</td>
-                      <td class="col-md-4 col-6">
+                      <td class="col-md-4 col-6" v-if="transactions.agent">
                         {{ transactions.agent.firstname }}
                         {{ transactions.agent.lastname }}
                       </td>
-                      <td class="col-md-2 col-6">Amout</td>
+                      <td class="col-md-2 col-6">Amount</td>
                       <td class="col-md-4 col-6">
                         &#8358; {{ formatAmount(transactions.amount) }}
                       </td>
@@ -161,7 +161,7 @@
                 </div>
                 <div class="table-responsive" v-if="loans">
                   <table class="table1">
-                    <tr class="row">
+                    <tr class="row" v-if="loans.user">
                       <td class="col-6 col-md-2">Name</td>
                       <td class="col-6 col-md-4">
                         {{ loans.user.firstname }} {{ loans.user.middlename }}
@@ -170,7 +170,7 @@
                       <td class="col-6 col-md-2">Email Address</td>
                       <td class="col-6 col-md-4">{{ loans.user.email }}</td>
                     </tr>
-                    <tr class="row">
+                    <tr class="row" v-if="loans.user">
                       <td class="col-md-2 col-6">Phone Number</td>
                       <td class="col-md-4 col-6">{{ loans.user.phone }}</td>
                       <td class="col-md-2 col-6">Account Number</td>
@@ -231,7 +231,7 @@
           </b-tab>
 
           <!-- Investment Approval Tab -->
-          <b-tab
+          <!-- <b-tab
             class="ml-3"
             :title-link-class="active1"
             title="Investment Approval"
@@ -271,13 +271,9 @@
                     </tr>
                   </table>
                 </div>
-                <!-- Button -->
                 <div class="mt-3 d-flex justify-content-between">
                   <div style="flex-grow:5"></div>
-                  <div
-                    class="d-flex justify-content-around"
-                    style="flex-grow:1"
-                  >
+                  <div class="d-flex justify-content-around" style="flex-grow:1">
                     <div class="btn btn-outline-success">Approve</div>
                     <div class="btn btn-outline-danger mr-md-2">Decline</div>
                     <div></div>
@@ -286,7 +282,7 @@
                 </div>
               </div>
             </div>
-          </b-tab>
+          </b-tab>-->
         </b-tabs>
       </div>
     </div>

@@ -197,7 +197,7 @@
           </b-tab>
 
           <!-- Investment Approval Tab -->
-          <b-tab
+          <!-- <b-tab
             class="ml-3"
             :title-link-class="active1"
             title="Investment Approval"
@@ -250,7 +250,7 @@
                 </div>
               </div>
             </div>
-          </b-tab>
+          </b-tab> -->
         </b-tabs>
       </div>
     </div>
@@ -306,6 +306,7 @@ export default {
     },
     //truncate string
     truncString(str) {
+      //if (str == null) return;
       return str.substring(3, 13);
     },
     //truncate string
@@ -355,8 +356,8 @@ export default {
         .then(res => {
           this.Transactions = res;
         })
-        .catch(() => {
-          //this.$toastr.e(err.message || err, "Failed");
+        .catch(err => {
+          this.$toastr.e(err.message || err, "Failed");
         })
         .finally(() => {
           this.loading = false;

@@ -7,7 +7,9 @@
       <div class="user-title mb-5">
         <div class="col-12">
           <span class="create mr-4 mr-sm-5" @click="create">Create User</span>
-          <span class="manage" :class="{ active: true }" @click="manage">Manage User</span>
+          <span class="manage" :class="{ active: true }" @click="manage"
+            >Manage User</span
+          >
         </div>
       </div>
       <div class="row mb-5 mt-n4">
@@ -23,7 +25,11 @@
                       <div class="mb-3">Agent</div>
                       <div>
                         <div class="input-group float-right">
-                          <input type="search" placeholder="Search Agent" class="form-control" />
+                          <input
+                            type="search"
+                            placeholder="Search Agent"
+                            class="form-control"
+                          />
                           <div class="input-group-append">
                             <div class="input-group-text">
                               <i class="fa fa-search"></i>
@@ -34,7 +40,7 @@
                     </div>
                     <div class="recent-transactions table-responsive">
                       <table>
-                        <tr style="background:#14899b; color:whitesmoke">
+                        <tr style="color:whitesmoke" class="bg-secondary">
                           <th>Agent ID</th>
                           <th>Agent Name</th>
                           <th>Email</th>
@@ -47,14 +53,21 @@
                           <th>Delete</th>
                         </tr>
 
-                        <tr v-for="(agent, index) in AGENT_DATA.slice(1)" :key="index">
+                        <tr
+                          v-for="(agent, index) in AGENT_DATA.slice(1)"
+                          :key="index"
+                        >
                           <td>{{ agent_id(index) }}</td>
                           <td>{{ agent.firstname }} {{ agent.lastname }}</td>
                           <td>{{ agent.email }}</td>
                           <td>{{ agent.phone }}</td>
-                          <td v-if="agent.wallet">&#8358; {{ formatAmount(agent.wallet.balance) }}</td>
+                          <td v-if="agent.wallet">
+                            &#8358; {{ formatAmount(agent.wallet.balance) }}
+                          </td>
                           <td v-else>0</td>
-                          <td v-if="agent.wallet">&#8358;{{ agent.wallet.todayDeposit }}</td>
+                          <td v-if="agent.wallet">
+                            &#8358;{{ agent.wallet.todayDeposit }}
+                          </td>
                           <td v-else>0</td>
                           <td v-if="agent.wallet">
                             &#8358;
@@ -84,7 +97,11 @@
                       <div class="mb-3">Customer</div>
                       <div>
                         <div class="input-group float-right">
-                          <input type="search" placeholder="Search Customer" class="form-control" />
+                          <input
+                            type="search"
+                            placeholder="Search Customer"
+                            class="form-control"
+                          />
                           <div class="input-group-append">
                             <div class="input-group-text">
                               <i class="fa fa-search"></i>
@@ -95,7 +112,7 @@
                     </div>
                     <div class="recent-transactions table-responsive">
                       <table>
-                        <tr style="background:#14899b; color:whitesmoke">
+                        <tr style="color:whitesmoke" class="bg-secondary">
                           <th>Name</th>
                           <th>Email Address</th>
                           <th>Phone Number</th>
@@ -106,8 +123,13 @@
                           <th>Delete</th>
                         </tr>
 
-                        <tr v-for="(customer, index) in Customers.slice(1)" :key="index">
-                          <td>{{ customer.firstname }} {{ customer.lastname }}</td>
+                        <tr
+                          v-for="(customer, index) in Customers.slice(1)"
+                          :key="index"
+                        >
+                          <td>
+                            {{ customer.firstname }} {{ customer.lastname }}
+                          </td>
                           <td>{{ customer.email }}</td>
                           <td>{{ customer.phone }}</td>
                           <td>{{ customer.account.accounts[0].number }}</td>
@@ -116,7 +138,7 @@
                           <td>
                             &#8358;
                             {{
-                            formatAmount(customer.account.accounts[0].balance)
+                              formatAmount(customer.account.accounts[0].balance)
                             }}
                           </td>
                           <td class="text-danger action">Delete</td>

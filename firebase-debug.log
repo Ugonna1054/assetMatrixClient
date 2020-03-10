@@ -1,0 +1,29 @@
+[debug] [2020-03-10T08:13:27.155Z] ----------------------------------------------------------------------
+[debug] [2020-03-10T08:13:27.158Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2020-03-10T08:13:27.158Z] CLI Version:   7.14.0
+[debug] [2020-03-10T08:13:27.158Z] Platform:      darwin
+[debug] [2020-03-10T08:13:27.159Z] Node Version:  v12.16.0
+[debug] [2020-03-10T08:13:27.163Z] Time:          Tue Mar 10 2020 09:13:27 GMT+0100 (West Africa Standard Time)
+[debug] [2020-03-10T08:13:27.163Z] ----------------------------------------------------------------------
+[debug] [2020-03-10T08:13:27.163Z] 
+[debug] [2020-03-10T08:13:27.177Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-10T08:13:27.178Z] > authorizing via signed-in user
+[debug] [2020-03-10T08:13:27.178Z] [iam] checking project asset-matrixx for permissions ["firebase.projects.get"]
+[debug] [2020-03-10T08:13:27.181Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-03-10T08:13:27.182Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-03-10T08:13:28.834Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-10T08:13:28.847Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/asset-matrixx:testIamPermissions  
+
+[debug] [2020-03-10T08:13:31.380Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-10T08:13:31.382Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/asset-matrixx  
+ 
+[debug] [2020-03-10T08:13:32.710Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/newuser/Documents/Javascript/ASSET_MATRIX/frontend'...
+[info] 
+[debug] [2020-03-10T08:13:32.716Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/asset-matrixx/webApps/-/config  
+ 
+[debug] [2020-03-10T08:13:34.023Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./dist
+[info] ✔  hosting: Local server: http://localhost:5000
