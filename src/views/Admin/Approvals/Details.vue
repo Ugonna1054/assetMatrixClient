@@ -340,6 +340,7 @@ export default {
     },
     //truncate string
     truncString(str) {
+      if (str == "" || str == null || str == undefined) return;
       return str.substring(3, 13);
     },
     //Approve account
